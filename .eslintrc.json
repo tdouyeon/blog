@@ -1,0 +1,12 @@
+{
+  "extends": ["next", "prettier"],
+  "settings": {
+    "next": {
+      "rootDir": "packages/my-app/"
+    }
+  },
+  "rules": {
+    "react/no-unescaped-entities": "off", // 특수문자 사용 가능하도록 함
+    "@next/next/no-page-custom-font": "off" // 모든 페이지에서 동일한 폰트 사용하도록 함
+  }
+}
