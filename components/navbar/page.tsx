@@ -1,8 +1,8 @@
-import Link from 'next/link';
+import styles from './navbar.module.scss'
 
 const Navbar: React.FC = () => {
   return (
-    <nav>
+    <nav className={styles.nav}>
         Navbar
     </nav>
   );

@@ -1,8 +1,8 @@
-import Navbar from '../navbar/page';
+import styles from './header.module.scss'
 
 const Header: React.FC = () => {
   return (
-    <header>
+    <header className= {styles.header}>
       My Blog
     </header>
   );

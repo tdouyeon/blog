@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
 import Header from "../components/header/page";
 import Footer from "../components/footer/page";
+import Navbar from "../components/navbar/page";
+import styles from './layout.module.scss'
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,12 +19,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  console.log("IN RootLayout")
+  console.log("IN RootLayout", children)
   return (
-    <html>
-    <Header />
-      <body className={inter.className}>{children}</body>
-    <Footer />
+    <html className={styles.html} >
+      <body className={styles.layoutContainer}>
+      <Header />
+        <div className={styles.headerContainer}>   
+        <Navbar />
+        {children}
+        </div>
+        <Footer />
+      </body>
     </html>
   );
 }
