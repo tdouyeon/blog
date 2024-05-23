@@ -6,9 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "prettier --check --ignore-path .gitignore .",
+    "format:fix": "prettier --write --ignore-path .gitignore ."
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.23.1",
+    "firebase": "^10.12.0",
+    "firebaseui": "^6.1.0",
     "next": "^14.2.3",
     "react": "^18",
     "react-dom": "^18",
