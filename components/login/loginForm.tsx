@@ -1,67 +1,71 @@
 'use client'
 // components/LoginForm.js
-import { useState } from 'react';
-import { signInWithEmailAndPassword,GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth, login } from '../../firebase/firebase';
+import { useState } from 'react'
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { auth, login } from '../../firebase/firebase'
+import { validEmail, validPassword } from '@/lib/validation'
 
 const LoginForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState({});
-  const [loginError, setLoginError] = useState('');
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [emailErrorText, setEmailErrorText] = useState('')
+  const [passwordErrorText, setPasswordErrorText] = useState('')
+  const [] = useState()
 
-  // const handleSubmit = async () => {
-  //   alert("in handleSubmit")
-  //     try {
-  //       console.log("여기까지 오셨나요?",email,password)
-  //       const  user  = await login({email, password});
-  //       alert(`성공이군요!!${user}`)
-  //       setErrors({});
-  //       setLoginError('');
-  //       // 로그인 성공 후 처리
-  //       alert(`여기까지 오셨나요?${email}${password}`)
-  //     } catch (error) {
-  //       alert(`실패군요!!!`)
-  //       setLoginError('Failed to login. Please check your email and password.');
-  //     }
-  // };
+  const handleSubmit = async () => {
+    alert('in handleSubmit')
+    if (!emailErrorText && !passwordErrorText) {
+      try {
+        console.log('여기까지 오셨나요?', email, password)
+        const user = await login({ email, password })
+        alert('로그인 성공입니다.')
+      } catch (error) {
+        alert('로그인 중 에러가 발생하였습니다. 다시 시도해 주세요.')
+      }
+    }
+  }
   function handleGoogleLogin() {
-    const provider = new GoogleAuthProvider(); // provider 구글 설정
+    const provider = new GoogleAuthProvider() // provider 구글 설정
     signInWithPopup(auth, provider) // 팝업창 띄워서 로그인
       .then((data) => {
-        console.log(data); // console에 UserCredentialImpl 출력
+        console.log(data) // console에 UserCredentialImpl 출력
       })
       .catch((err) => {
-        console.log(err);
-      });
+        console.log(err)
+      })
   }
   return (
-    // <form onSubmit={handleGoogleLogin}>
-    //   <div>
-    //     <label htmlFor="email">Email</label>
-    //     <input
-    //       id="email"
-    //       type="email"
-    //       value={email}
-    //       onChange={(e) => setEmail(e.target.value)}
-    //     />
-    //   </div>
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value)
+            setEmailErrorText(validEmail(e.target.value))
+          }}
+        />
+        {emailErrorText && <div style={{ color: 'red' }}>{emailErrorText}</div>}
+      </div>
+      <div>
+        <label htmlFor="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          value={password}
+          onChange={(e) => {
+            setPassword(e.target.value)
+            setPasswordErrorText(validPassword(e.target.value))
+          }}
+        />
+      </div>
+      {passwordErrorText && <div style={{ color: 'red' }}>{passwordErrorText}</div>}
+      <button onClick={handleSubmit}>Login</button>
+      //{' '}
+    </form>
+  )
+}
 
-    //   <div>
-    //     <label htmlFor="password">Password</label>
-    //     <input
-    //       id="password"
-    //       type="password"
-    //       value={password}
-    //       onChange={(e) => setPassword(e.target.value)}
-    //     />
-    //   </div>
-
-    //   {loginError && <div style={{ color: 'red' }}>{loginError}</div>}
-
-      <button onClick={handleGoogleLogin}>Login</button>
-    // </form>
-  );
-};
-
-export default LoginForm;
+export default LoginForm
