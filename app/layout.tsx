@@ -5,7 +5,7 @@ import Footer from '../components/footer/page'
 import Navbar from '../components/navbar/page'
 import styles from './layout.module.scss'
 import { useState, useEffect } from 'react'
-import LoginForm from '../components/login/loginForm'
+import LoginForm from './ui/login/loginForm'
 import localFont from 'next/font/local'
 
 const pretendard = localFont({
