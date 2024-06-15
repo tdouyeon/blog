@@ -1,53 +1,58 @@
 'use client'
-import { Inter } from "next/font/google";
-import Header from "../components/header/page";
-import Footer from "../components/footer/page";
-import Navbar from "../components/navbar/page";
+import { Inter } from 'next/font/google'
+import Header from '../components/header/page'
+import Footer from '../components/footer/page'
+import Navbar from '../components/navbar/page'
 import styles from './layout.module.scss'
-import { onAuthStateChanged } from "firebase/auth";
-import { useState, useEffect } from "react";
-import LoginForm from "../components/login/loginForm";
-import { auth } from "../firebase/firebase";
+import { onAuthStateChanged } from 'firebase/auth'
+import { useState, useEffect } from 'react'
+import LoginForm from '../components/login/loginForm'
+import { auth } from '../firebase/firebase'
+import localFont from 'next/font/local'
 
+const pretendard = localFont({
+  src: '../public/fonts/PretendardVariable.woff2',
+  display: 'swap',
+  weight: '45 920',
+})
 
-
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setIsAuthenticated(true);
+        setIsAuthenticated(true)
       } else {
-        setIsAuthenticated(false);
+        setIsAuthenticated(false)
       }
-    });
+    })
 
-    return () => unsubscribe();
-  }, []);
+    return () => unsubscribe()
+  }, [])
 
   return (
-    <html className={styles.html}>
+    <html className={pretendard.className}>
       <body className={styles.layoutContainer}>
-        {isAuthenticated ? (
-          <>
-            <Header />
-            <div className={styles.headerContainer}>
-              <Navbar />
-              {children}
-            </div>
-            <Footer />
-          </>
-        ) : (
+        {/* {isAuthenticated ? ( */}
+        <>
+          <Header />
+          <div className={styles.headerContainer}>
+            <Navbar />
+            {children}
+          </div>
+          <Footer />
+        </>
+        {/* ) : (
           <LoginForm />
-        )}
+        )} */}
       </body>
     </html>
-  );
+  )
 }
