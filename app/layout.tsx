@@ -4,10 +4,8 @@ import Header from '../components/header/page'
 import Footer from '../components/footer/page'
 import Navbar from '../components/navbar/page'
 import styles from './layout.module.scss'
-import { onAuthStateChanged } from 'firebase/auth'
 import { useState, useEffect } from 'react'
 import LoginForm from '../components/login/loginForm'
-import { auth } from '../firebase/firebase'
 import localFont from 'next/font/local'
 
 const pretendard = localFont({
@@ -24,18 +22,6 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setIsAuthenticated(true)
-      } else {
-        setIsAuthenticated(false)
-      }
-    })
-
-    return () => unsubscribe()
-  }, [])
 
   return (
     <html className={pretendard.className}>
