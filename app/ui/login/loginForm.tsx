@@ -10,8 +10,20 @@ const LoginForm = () => {
   const [passwordErrorText, setPasswordErrorText] = useState('')
   const [] = useState()
 
-  const handleSubmit = async () => {
-    alert('in handleSubmit')
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    }
+    fetch('/api/login', options)
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result, 'result')
+      })
   }
 
   return (
@@ -43,7 +55,6 @@ const LoginForm = () => {
       </div>
       {passwordErrorText && <div style={{ color: 'red' }}>{passwordErrorText}</div>}
       <button onClick={handleSubmit}>Login</button>
-      //{' '}
     </form>
   )
 }
